@@ -4,6 +4,7 @@ import store from './store/store'
 import {AuthProvider} from "./providers/AuthProvider";
 import {BrowserRouter} from "react-router-dom";
 import Router from "./router";
+import './assets/styles/common.css'
 
 function App() {
   return (

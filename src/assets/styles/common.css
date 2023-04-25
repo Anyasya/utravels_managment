@@ -1,0 +1,16 @@
+/*FF5104*/
+:root {
+
+    /* COLORS \/\/\/\/\/\/\/\/ */
+    --text-white: #FFFFFF;
+    --primary-color: #FF5104;
+}
+#root{
+    background-color: #F5F6F8;
+}
+.AuthContainer_mainLayout_formsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

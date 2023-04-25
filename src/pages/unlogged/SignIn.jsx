@@ -7,13 +7,13 @@ import {useNavigate} from "react-router-dom";
 // User SignIn Schema that contains 2 fields
 const user_auth = {
     username: {
-        placeholder: 'Email',
+        placeholder: 'логин',
         value: '',
         error: null,
-        type: 'email'
+        // type: 'email'
     },
     password: {
-        placeholder: 'Password',
+        placeholder: 'пароль',
         value: '',
         error: null,
         type: 'password'
@@ -83,15 +83,16 @@ const SignIn = () => {
 
     return (
         <div {...{className: 'AuthFormContainer flex-column'}}>
-            <h1>Вход в личный кабинет</h1>
+            <h1 style={{marginBottom: 55}}>Вход в личный кабинет</h1>
             {
                 Object.keys(user).map(field =>
                     <div {...{key: field}}>
+                        <div style={{fontWeight: 600}}>{user[field].placeholder[0].toUpperCase() + user[field].placeholder.slice(1)}</div>
                         <DefaultInput {...{
-                            style: {marginTop: 25},
+                            style: {marginTop: 10, height: 50, marginBottom: 10},
                             type: user[field].type,
                             value: user[field].value,
-                            placeholder: user[field].placeholder,
+                            placeholder: `Введите ${user[field].placeholder}`,
                             onChange: (value) => handleInputChange(field, value),
                             error: !!user[field].error,
                             errorText: user[field].error
@@ -99,44 +100,14 @@ const SignIn = () => {
                     </div>
                 )
             }
-            {/*<div {...{className: 'AuthFormContainer_questionsContainer flex-row align-center justify-between'}}>*/}
-            {/*    <div {...{className: 'AuthFormContainer_questionsContainer_remember pointer transition-default'}}>*/}
-            {/*        <input {...{*/}
-            {/*            type: 'checkbox',*/}
-            {/*            className: 'AuthFormContainer_questionsContainer_rememberInput',*/}
-            {/*            id: 'remember_me',*/}
-            {/*            value: remember,*/}
-            {/*            onChange: (e) => setRemember(e.target.value)*/}
-            {/*        }}/>*/}
-            {/*        <div {...{className: 'flex-row align-center', style: {marginTop: 10}}}>*/}
-            {/*            <DefaultSwitcherSingle/>*/}
-            {/*            <span {...{style: {marginLeft: 14}}}>Запомнить меня</span>*/}
-            {/*        </div>*/}
-            {/*        /!*<label {...{htmlFor: 'remember_me', className: 'flex-row align-center pointer'}}>*!/*/}
-            {/*        /!*    <div {...{className: 'flex-row align-center justify-center'}}>*!/*/}
-            {/*        /!*        <div></div>*!/*/}
-            {/*        /!*    </div>*!/*/}
-            {/*        /!*    <span>Запомнить меня</span>*!/*/}
-            {/*        /!*</label>*!/*/}
-            {/*    </div>*/}
-            {/*    <div {...{className: 'AuthFormContainer_questionsContainer_forgotPassword pointer transition-default', style: {marginTop: 10}}}>Забыли пароль?</div>*/}
-            {/*</div>*/}
             <DefaultButton {...{
                 text: 'Войти',
                 loading,
                 onClick: handleSignInUser,
-                width: '100%'
+                width: '100%',
+                height: 50,
+                style: {marginTop: 50}
             }}/>
-            {/*<div {...{className: 'AuthFormContainer_orAnother flex-row align-center justify-center'}}>*/}
-            {/*    <div></div>*/}
-            {/*    <div>или</div>*/}
-            {/*</div>*/}
-            {/*<DefaultButton {...{*/}
-            {/*    onClick: () => navigate('/auth/sign-up'),*/}
-            {/*    text: 'Зарегистрироваться',*/}
-            {/*    border: true,*/}
-            {/*    width: '100%'*/}
-            {/*}}/>*/}
         </div>
     )
 }
