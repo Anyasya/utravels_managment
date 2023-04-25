@@ -1,0 +1,89 @@
+/*INPUT START*/
+
+.DefaultInputContainer {
+    height: 40px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+}
+
+.DefaultInput {
+    transition: .2s;
+    font-family: var(--font-regular);
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--input-border-color);
+    background: transparent;
+    padding: 0 15px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.DefaultInput::placeholder {
+    color: var(--input-placeholder-color)
+}
+
+.DefaultInputError {
+    color: var(--text-error);
+    border: 1px solid #ff9b9b;
+    animation: bounce 0.5s ease;
+}
+
+.DefaultInputError::placeholder {
+    color: var(--text-error);
+}
+
+.DefaultInputContainerErrorText {
+    position: absolute;
+    bottom: -15px;
+    left: 3px;
+    color: var(--text-error);
+    font-size: 11px;
+    animation: show_error .2s;
+}
+
+/*INPUT END*/
+
+
+
+/*BUTTON START*/
+
+
+.DefaultButton {
+    width: fit-content;
+    /*height: 50px;*/
+    border-radius: 5px;
+    background: var(--primary-color);
+    height: fit-content;
+}
+
+.DefaultButton div {
+    font-size: 14px;
+    color: var(--text-white)
+}
+
+.DefaultButton:hover {
+    background: var(--primary-color-hover);
+}
+
+.DefaultButtonBorder {
+    background: transparent;
+    border: 1px solid var(--input-border-color)
+}
+
+.DefaultButtonBorder div {
+    color: var(--text-twelth)
+}
+
+.DefaultButtonBorder:hover {
+    background: transparent;
+    border: 1px solid var(--text-second);
+    color: var(--text-second);
+}
+
+.DefaultButtonBorder:hover div {
+    color: var(--text-second);
+}
+
+/*BUTTON END*/
