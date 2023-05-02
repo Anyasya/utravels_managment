@@ -4,13 +4,13 @@
 .DefaultInputContainer {
     height: 40px;
     width: 100%;
-    max-width: 500px;
+    /*max-width: 500px;*/
     position: relative;
 }
 
 .DefaultInput {
     transition: .2s;
-    font-family: var(--font-regular);
+    /*font-family: var(--font-regular);*/
     font-size: 15px;
     width: 100%;
     height: 100%;
@@ -54,18 +54,22 @@
 
 .DefaultButton {
     width: fit-content;
-    border-radius: 5px;
+    border-radius: 12px;
     background: var(--primary-color);
     height: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    padding: 0px 12px;
+    box-sizing: border-box;
 }
 
 .DefaultButton div {
-    font-size: 14px;
-    color: var(--text-white)
+    /*font-size: 14px;*/
+    color: var(--text-white);
+    font-weight: 700;
+    font-size: 13px;
 }
 
 .DefaultButton:hover {
@@ -92,3 +96,34 @@
 }
 
 /*BUTTON END*/
+
+
+
+/*MODAL START*/
+.layout{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ModalContainer{
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.Modal {
+    background: #FFFFFF;
+    border-radius: 12px;
+}
+.ModalButtons{
+    display: flex;
+    justify-content: end;
+}
+/*MODAL END*/
+

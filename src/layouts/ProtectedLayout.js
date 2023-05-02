@@ -9,6 +9,7 @@ export const ProtectedLayout = () => {
     const location = useLocation()
     const [isInit, setIsInit] = useState(false)
 
+
     // Verify user action
     useEffect(() => {
         verifyAction().then(() => {
@@ -27,7 +28,7 @@ export const ProtectedLayout = () => {
                 navigate("/auth/sign-in", { replace: true });
             } else {
                 if(location.pathname.includes('auth')) {
-                    navigate("/dashboard", { replace: true });
+                    navigate("/auth/confirm", { replace: true });
                 }
             }
         }

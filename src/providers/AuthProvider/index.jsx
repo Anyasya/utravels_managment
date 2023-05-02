@@ -31,8 +31,7 @@ export const AuthProvider = ({children}) => {
                 axios({
                     method: "post",
                     url: "https://usersmap.ru/api/auth",
-                    data: formData,
-                    headers: {"Content-Type": "application/json"},
+                    data: formData
                 }).then(result => {
                     if ([200, 201].includes(result.status)) {
                         resolve(result)

@@ -1,0 +1,163 @@
+.orderTitle {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 25px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+
+.orderInfo {
+    padding: 30px;
+    gap: 30px;
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    box-sizing: border-box;
+}
+
+.orderInfo__topInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+}
+
+.orderInfo__bottomInfoTitle {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    margin-bottom: 5px;
+    color: #878395;
+}
+
+.orderInfo__bottomInfoValue {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+}
+
+.orderInfo__leftName {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 700;
+    font-size: 27px;
+    line-height: 31px;
+    /* identical to box height */
+
+    color: #000000;
+    margin-bottom: 10px;
+
+}
+
+.orderInfo__leftCountry {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+
+    color: #878395;
+    margin-bottom: 30px;
+
+
+}
+
+.orderInfo__right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.orderInfo__rightName {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+    text-transform: uppercase;
+
+    color: #878395;
+    margin-bottom: 5px;
+
+}
+
+.orderInfo__rightCountry {
+
+    /*font-family: 'Arial', sans-serif;*/
+    font-style: normal;
+    font-weight: 700;
+    font-size: 27px;
+    line-height: 31px;
+    /* identical to box height */
+
+    color: #FF5104;
+
+}
+
+.confirmGuest {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 20px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+.orderTitleRusName {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    /* identical to box height */
+
+    color: #000000;
+    margin-bottom: 10px;
+
+
+}
+
+.orderTitleEngName {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+
+    color: #878395;
+    margin-bottom: 20px;
+
+}
+
+.confirmGuestTitle{
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    margin-bottom: 5px;
+    color: #878395;
+
+}
+
+.confirmGuestValue{
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+
+    color: #000000;
+
+}

@@ -31,7 +31,6 @@ const SignIn = () => {
     //
     const handleInputChange = (key, value) => {
         handleInputError(key, null)
-        console.log(key,value,user)
         setUser(prevState => ({...prevState, [key]: {...prevState[key], value}}))
     }
 
@@ -59,15 +58,14 @@ const SignIn = () => {
                 valid = false
             }
         })
+        // CHANGED
         if(valid) {
             let body = {}
             Object.keys(user).map(key => {
                 body[key] = user[key].value.toString()
             })
-            console.log(body,'bodyy')
             setLoading(true)
             loginAction(body).then((result) => {
-                console.log(result,'RESILT')
                 setUserCredentials(result.data)
             }).catch((e) => {
                 Object.keys(user).map(key => {

@@ -1,16 +1,110 @@
-/*FF5104*/
+body {
+    min-height: 100vh;
+    background-color: #F5F6F8;
+    min-width: 100%;
+    overflow: scroll;
+}
 :root {
 
     /* COLORS \/\/\/\/\/\/\/\/ */
     --text-white: #FFFFFF;
     --primary-color: #FF5104;
+    overflow: scroll;
 }
-#root{
+
+#root {
     background-color: #F5F6F8;
 }
+
 .AuthContainer_mainLayout_formsContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+.ClientCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px;
+    gap: 20px;
+    width: 100%;
+    height: 195px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+.ClientCard_statuses {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.status_approved, .status_paid {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 17px;
+
+}
+
+.status_approved {
+    margin-right: 10px;
+}
+
+.status_edit, .status_delete {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    /* identical to box height */
+    text-align: center;
+    text-transform: uppercase;
+    color: #878395;
+    cursor: pointer;
+}
+
+.status_edit {
+    margin-left: auto;
+}
+
+.status_delete {
+    margin-left: 20px;
+}
+
+.hotelName {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    /* identical to box height */
+    color: #000000;
+    margin-bottom: 10px;
+
+}
+
+.hotelPrice {
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #878395;
+
+}
+
+
+.mainHeader__title{
+    /*font-family: 'Arial';*/
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 25px;
+    color: #000000;
 }
