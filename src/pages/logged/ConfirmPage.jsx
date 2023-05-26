@@ -2,51 +2,58 @@ import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import './index.css'
 import {Header} from "../../components/header";
-import DefaultInput from "../../components/DefaultInput";
 import DefaultButton from "../../components/DefaultButton";
+import {
+    confirmGuest,
+    getOrderData,
+    getOrderFields,
+    getOrderGuestFields, getPaymentLink,
+    updateOrderData
+} from "../../api/routes/client";
 
 export const ConfirmPage = () => {
-    const [orderId, setOrderId] = useState(ORDERDATA)
-    const [orderData, setOrderData] = useState(ORDERDATA)
+    // const [orderId, setOrderId] = useState(ORDERDATA)
+
+    const [fields, setFields] = useState([])
+    const [guestFields, setGuestFields] = useState([])
     const location = useLocation()
     const navigate = useNavigate()
+    const [orderData, setOrderData] = useState({})
     useEffect(() => {
-        location?.state && setOrderId(location?.state)
+       let order = (((location.pathname).split('/').slice(-1))[0])
+        // location?.state && setOrderId(location?.state)
+        getOrderData(order).then(result => {
+            setOrderData(result.data)
+        })
+        getOrderGuestFields().then(result => {
+            setGuestFields(result.data)
+        })
+        getOrderFields().then(result => {
+            setFields(result.data)
+        })
     }, [])
 
-    const handleInputChange = (key, value) => {
-        // handleInputError(key, null)
-        setOrderData(prevState => ({
-            ...prevState, [key]: value
-            // {...prevState[key]
-            //     , value}
-        }))
-    }
 
-    const handleInputChangeGuest = (index, key, value) => {
-        let newState = Object.assign({}, orderData);
-        newState.guests[index][key] = value;
-        setOrderData(newState)
+    const handleInputChange = (index,key, value, id) => {
+        confirmGuest(id).then(result => {
+            let newState = Object.assign({}, orderData);
+            newState.guests[index][key] = value;
+            setOrderData(newState)
 
+        })
     }
 
 
-    const addGuest = () => {
-        setOrderData(prevState => ({
-            ...prevState, guests: [...prevState.guests, {}]
-        }))
-    }
 
-    const deleteGuest = (key) => {
-        setOrderData(prevState => ({
-            ...prevState, guests: prevState.guests.filter((_, i) => i !== key)
-        }))
-        console.log(orderData)
-    }
+    function redirectToPay() {
+        getPaymentLink(orderData.id).then(result => {
+            window.open(result.data, "_blank", "noreferrer")
+            })
+        // updateOrderData(orderData).then(result => {
+        //     console.log('ok')
+        // })
 
 
-    const saveOrder = () => {
-        navigate('/')
     }
 
     return (
@@ -55,21 +62,21 @@ export const ConfirmPage = () => {
             <div className={'orderInfo'}>
                 <div className="orderInfo__topInfo">
                     <div className="orderInfo__left">
-                        <div className="orderInfo__leftName">{orderData.hotel_name}</div>
-                        <div className="orderInfo__leftCountry">{orderData.hotel_country}</div>
+                        <div className="orderInfo__leftName">{orderData?.hotel}</div>
+                        <div className="orderInfo__leftCountry">{orderData?.hotel_country}</div>
                     </div>
                     <div className="orderInfo__right">
                         <div className="orderInfo__rightName">К ОПЛАТЕ</div>
-                        <div className="orderInfo__rightCountry">{orderData.price} ₽</div>
+                        <div className="orderInfo__rightCountry">{orderData?.price && (orderData?.price).toLocaleString()} ₽</div>
                     </div>
                 </div>
                 <div className="orderInfo__bottomInfo">
-                    <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: 50}}>
-                        {HOTELFIELDS && orderData &&
-                            HOTELFIELDS.map((item, key) => (
-                                <div key={key} style={{width: '25%'}}>
+                    <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginBottom: 50}}>
+                        {fields  &&
+                            fields.map((item, key) => (
+                                <div key={key} style={{width: '25%'}} className={'orderInfo__bottomField'}>
                                     <div className={'orderInfo__bottomInfoTitle'}>{item.placeholder[0].toUpperCase() + item.placeholder.slice(1)}</div>
-                                    <div className={'orderInfo__bottomInfoValue'}>{item.key ? orderData.hasOwnProperty(item.key) ? orderData[item.key] : `` : ''}</div>
+                                    <div className={'orderInfo__bottomInfoValue'}>{item.key ? orderData.hasOwnProperty(item.key) ?  item.key === 'guests' ? (orderData[item.key]).length :orderData[item.key] : `` : ''}</div>
 
                                 </div>
 
@@ -82,8 +89,8 @@ export const ConfirmPage = () => {
             <div className={'orderTitle'}>Паспортные данные</div>
 
 
-            {orderData.guests &&
-                orderData.guests.map((item, key) => (
+            {orderData?.guests &&
+                orderData?.guests.map((item, key) => (
                     <div key={key} className={'confirmGuest'}>
                         <div className={'orderTitle'} style={{
                             fontWeight: 600,
@@ -92,22 +99,19 @@ export const ConfirmPage = () => {
                             alignItems: 'center'
                         }}>
                             <div>
-                                <div className={'orderTitleRusName'}>BVZ AFVBKBX</div>
-                                <div className={'orderTitleEngName'}>ИМЯ ФАМИЛИЯ</div>
+                                <div className={'orderTitleRusName'}>{item.en_first_name} {item.en_second_name} {item.en_middle_name}</div>
+                                <div className={'orderTitleEngName'}>{item.ru_first_name} {item.ru_second_name} {item.ru_middle_name}</div>
                             </div>
                             <DefaultButton {...{
-                                text:  `${item.approved ? 'Данные подтверждены':'Подтвердить'}`,
-                                // loading,
-                                onClick: () => deleteGuest(key),
-                                // width: '100%',
+                                text:  `${item?.confirmed ? 'Данные подтверждены':'Подтвердить'}`,
+                                onClick: () => {handleInputChange(key, 'confirmed', true, item.id); },
                                 height: 40,
-                                // style: {marginTop: 50}
-                                style: {background: item.approved ? '#878395': '#FF5104' }
+                                style: {background: item?.confirmed ? '#878395': '#FF5104' }
                             }}/>
                         </div>
-                        <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
-                            {CLIENTFIELDS &&
-                                CLIENTFIELDS.map((item, key2) => (
+                        <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap'}}>
+                            {guestFields &&
+                                guestFields.map((item, key2) => (
                                     <div key={key2} style={{width: '25%', marginBottom: 20}}>
                                         <div className={'confirmGuestTitle'}>{item.placeholder[0].toUpperCase() + item.placeholder.slice(1)}</div>
                                         <div className={'confirmGuestValue'}>{orderData.guests[key] ? orderData.guests[key][item.key] ? orderData.guests[key][item.key] : '' : ''}</div>
@@ -123,7 +127,7 @@ export const ConfirmPage = () => {
                 <DefaultButton {...{
                     text: 'Перейти к оплате',
                     // loading,
-                    onClick: () => addGuest(),
+                    onClick: () => redirectToPay(),
                     width: '100%',
                     height: 50,
                     // style: {marginTop: 50}
@@ -131,88 +135,12 @@ export const ConfirmPage = () => {
                 }}/>
             </div>
 
+            <div style={{marginTop: 15, marginBottom:20, color: '#878395',display: 'flex',
+                justifyContent: 'center'}}>
+                Я принимаю условия <a href='assets/docs/oferta.pdf' target='_blank' style={{color: '#FF5104', paddingLeft: 5}}> оферты</a>
+            </div>
+
 
         </div>
     )
-}
-
-
-const HOTELFIELDS = [
-    {
-        id: 1,
-        type: 'input',
-        key: 'hotel',
-        placeholder: 'Отель'
-    },
-    {
-        id: 2,
-        type: 'input',
-        key: 'city',
-        placeholder: 'Город'
-    },
-    {
-        id: 3,
-        type: 'input',
-        key: 'from',
-        placeholder: 'Откуда'
-    },
-    {
-        id: 4,
-        type: 'input',
-        placeholder: 'Страна'
-    },
-]
-
-const CLIENTFIELDS = [
-    {
-        id: 1,
-        type: 'input',
-        placeholder: 'Имя на русском',
-        key: 'russianName',
-    },
-    {
-        id: 2,
-        type: 'input',
-        placeholder: 'Имя на английском',
-        key: 'englishName',
-    },
-    {
-        id: 3,
-        type: 'input',
-        placeholder: 'Отчество на русском'
-    },
-    {
-        id: 4,
-        type: 'input',
-        placeholder: 'Отчество на английском'
-    },
-    {
-        id: 5,
-        type: 'input',
-        placeholder: 'Отчество на английском',
-    },
-
-]
-
-const ORDERDATA = {
-    hotel_name: 'HOTELL',
-    city: 'SEVSK',
-    hotel_country: 'NEHRHU',
-    price: 48545,
-    guests: [
-        {
-            id: 1,
-            name: 'DKDEK',
-            russianName: 'РУСАК 1',
-            englishName: 'DKDEK3'
-        },
-        {
-            id: 2,
-            name: 'РУСАК 2',
-            russianName: 'РУСАК 2',
-            englishName: 'DKDEK8'
-        }
-    ]
-
-
 }

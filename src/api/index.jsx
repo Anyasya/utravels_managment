@@ -10,7 +10,7 @@ let NODE_ENV = 'development'
 
 // const HOST = process.env.URL_API
 // const HOST = 'https://uhead-backend-master.k8s.caltat.net/'
-export const HOST = 'https://usersmap.ru/api/'
+export const HOST = 'https://new.utravels.ru/api/'
 
 const client = axios.create({
     baseURL: HOST,

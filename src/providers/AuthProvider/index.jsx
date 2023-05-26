@@ -30,7 +30,7 @@ export const AuthProvider = ({children}) => {
             return new Promise((resolve, reject) => {
                 axios({
                     method: "post",
-                    url: "https://usersmap.ru/api/auth",
+                    url: "https://new.utravels.ru/api/auth",
                     data: formData
                 }).then(result => {
                     if ([200, 201].includes(result.status)) {
@@ -64,7 +64,7 @@ export const AuthProvider = ({children}) => {
                         dispatch(initUser(result.data))
                         resolve(result.data)
                         let access_token = localStorage.getItem('access_token')
-                        axios.get('https://usersmap.ru/api/get-user',{ headers: {Authorization: 'Bearer ' + access_token}}).then(response => (dispatch(initUser(response.data))))
+                        // axios.get('https://new.utravels.ru/api/get-user',{ headers: {Authorization: 'Bearer ' + access_token}}).then(response => (dispatch(initUser(response.data))))
                         break;
                     case BAD:
                         logoutAction()

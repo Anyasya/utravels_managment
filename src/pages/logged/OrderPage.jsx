@@ -2,17 +2,35 @@ import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import './index.css'
 import {Header} from "../../components/header";
-import {ClientCard} from "../../components/ClientCard";
 import DefaultInput from "../../components/DefaultInput";
 import DefaultButton from "../../components/DefaultButton";
+import {
+    getOrderData,
+    getOrderFields,
+    getOrderGuestFields,
+    saveOrderData,
+    updateOrderData
+} from "../../api/routes/client";
 
 export const OrderPage = () => {
     const [orderId, setOrderId] = useState(null)
-    const [orderData, setOrderData] = useState(ORDERDATA)
+    const [orderData, setOrderData] = useState({})
+    const [fields, setFields] = useState([])
+    const [guestFields, setGuestFields] = useState([])
     const location = useLocation()
     const navigate = useNavigate()
     useEffect(() => {
         location?.state && setOrderId(location?.state)
+        getOrderFields().then(result => {
+            setFields(result.data)
+        })
+        getOrderGuestFields().then(result => {
+            setGuestFields(result.data)
+        })
+        getOrderData(location.state).then(result => {
+            setOrderData(result.data)
+        })
+
     }, [])
 
     const handleInputChange = (key, value) => {
@@ -33,9 +51,24 @@ export const OrderPage = () => {
 
 
     const addGuest = () => {
-        setOrderData(prevState => ({
-            ...prevState, guests: [...prevState.guests, {}]
-        }))
+        if (location.state || orderData?.guests?.length > 0) {
+            setOrderData(prevState => ({
+                ...prevState, guests: [...prevState.guests, {}]
+            }))
+        } else {
+            const obj = {};
+
+            guestFields.forEach(item => {
+                obj[item.key] = ''
+            });
+            obj.confirmed = false
+            setOrderData(prevState => ({
+                ...prevState, guests: [{obj}]
+            }))
+
+        }
+
+
     }
 
     const deleteGuest = (key) => {
@@ -45,10 +78,15 @@ export const OrderPage = () => {
     }
 
 
-
-
     const saveOrder = () => {
-        navigate('/')
+        location?.state ? updateOrderData(orderData).then(result => {
+                navigate('/')
+            }) :
+            saveOrderData(orderData).then(result => {
+                navigate('/')
+            })
+
+
     }
 
     return (
@@ -56,17 +94,18 @@ export const OrderPage = () => {
             <Header/>
             <div className={'orderTitle'}>{orderId ? 'Редактирование заказа' : 'Новый заказ'}</div>
             <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: 50}}>
-                {HOTELFIELDS && orderData &&
-                    HOTELFIELDS.map((item, key) => (
+                {fields &&
+                    fields.map((item, key) => (
                         <div key={key} style={{width: '49%'}}>
                             <div
                                 style={{fontWeight: 600}}>{item.placeholder[0].toUpperCase() + item.placeholder.slice(1)}</div>
                             <DefaultInput {...{
                                 style: {marginTop: 10, height: 50, marginBottom: 10},
                                 // type: user[field].type,
-                                value: item.key ? orderData.hasOwnProperty(item.key) ? orderData[item.key] : `` : '',
+                                value: item.key ? orderData.hasOwnProperty(item.key) ? item.key === 'guests' ? (orderData[item.key]).length : orderData[item.key] : `` : '',
                                 placeholder: 'Введите данные',
                                 onChange: (value) => handleInputChange(item.key, value),
+                                disabled: item.key === 'guests'
                                 // error: !!user[field].error,
                                 // errorText: user[field].error
                             }}/>
@@ -74,7 +113,7 @@ export const OrderPage = () => {
 
                     ))}
             </div>
-            {orderData.guests &&
+            {orderData?.guests &&
                 orderData.guests.map((item, key) => (
                     <div key={key}>
                         <div className={'orderTitle'} style={{
@@ -88,7 +127,7 @@ export const OrderPage = () => {
                             <DefaultButton {...{
                                 text: 'Удалить',
                                 // loading,
-                                onClick: ()=> deleteGuest(key),
+                                onClick: () => deleteGuest(key),
                                 // width: '100%',
                                 height: 40,
                                 // style: {marginTop: 50}
@@ -96,8 +135,8 @@ export const OrderPage = () => {
                             }}/>
                         </div>
                         <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
-                            {CLIENTFIELDS &&
-                                CLIENTFIELDS.map((item, key2) => (
+                            {guestFields &&
+                                guestFields.map((item, key2) => (
                                     <div key={key2} style={{width: '49%'}}>
                                         <div
                                             style={{fontWeight: 600}}>{item.placeholder[0].toUpperCase() + item.placeholder.slice(1)}</div>
@@ -112,7 +151,9 @@ export const OrderPage = () => {
                                         }}/>
                                     </div>
 
-                                ))}
+                                )
+                                )
+                            }
                         </div>
 
                     </div>
@@ -122,7 +163,7 @@ export const OrderPage = () => {
                 <DefaultButton {...{
                     text: 'Добавить гостя',
                     // loading,
-                    onClick: ()=>addGuest(),
+                    onClick: () => addGuest(),
                     width: '100%',
                     height: 50,
                     // style: {marginTop: 50}
@@ -132,7 +173,7 @@ export const OrderPage = () => {
                     <DefaultButton {...{
                         text: 'Отменить изменения',
                         // loading,
-                        onClick: ()=>navigate('/'),
+                        onClick: () => navigate('/'),
                         width: '49%',
                         height: 50,
                         style: {background: '#bcbac3'}

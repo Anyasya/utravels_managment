@@ -7,14 +7,14 @@ export const ClientCard = ({item,handleModalOpen,setCurrentCardId}) => {
     return (
         <div className={'ClientCard'}>
             <div className="ClientCard_statuses">
-                <div className="status_approved" style={{color: item.approved ? '#04BA37' : '#FF0000'}}>
-                    {item.approved ? 'Подтвержден' : 'Не подтвержден'}
+                <div className="status_approved" style={{color: item.confirmed ? '#04BA37' : '#FF0000'}}>
+                    {item.confirmed ? 'Подтвержден' : 'Не подтвержден'}
                 </div>
                 <div className="status_paid" style={{color: item.paid ? '#04BA37' : '#FF0000'}}>
                     {item.paid ? 'Оплачен' : 'Не оплачен'}
                 </div>
                 <div className="status_edit" onClick={() => {
-                    navigate('/order', {state: item.id})
+                    navigate('/order', {state: item.link})
                 }}>
                     Редактировать
                 </div>
@@ -24,17 +24,17 @@ export const ClientCard = ({item,handleModalOpen,setCurrentCardId}) => {
             </div>
             <div className="ClientCard_hotel">
                 <div className="hotelName">
-                    Anita Kemer Noch Adults Only 12+ 4*
+                    {item.hotel}
                 </div>
                 <div className="hotelPrice">
-                    23 490
+                    {item.price ? (item.price).toLocaleString(): 0} ₽
                 </div>
             </div>
 
             <DefaultButton {...{
                 text: 'Ссылка клиенту',
                 // loading,
-                onClick: ()=>   navigate(`/auth/confirm/${item.id}`, {state: item.id}),
+                onClick: ()=>   navigate(`/auth/confirm/${item.link}`, {state: item.link}),
                 // width: '100%',
                 height: 40,
                 style: {background: '#878395', marginTop: 'auto', minHeight: 40}
