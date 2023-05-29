@@ -1,9 +1,17 @@
 import DefaultButton from "./DefaultButton";
-import React from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 export const ClientCard = ({item,handleModalOpen,setCurrentCardId}) => {
     const navigate = useNavigate()
+    const [show, setShow] = useState(false);
+
+    const handleClick = (link) => {
+        navigator.clipboard.writeText(`http://localhost:3000/checkout/${link}`)
+        setShow(true);
+        setTimeout(() => setShow(false), 3000);
+    };
+
     return (
         <div className={'ClientCard'}>
             <div className="ClientCard_statuses">
@@ -34,12 +42,29 @@ export const ClientCard = ({item,handleModalOpen,setCurrentCardId}) => {
             <DefaultButton {...{
                 text: 'Ссылка клиенту',
                 // loading,
-                onClick: ()=>   navigate(`/auth/confirm/${item.link}`, {state: item.link}),
+                onClick: ()=>  handleClick(item.link),
                 // width: '100%',
                 height: 40,
                 style: {background: '#878395', marginTop: 'auto', minHeight: 40}
             }}/>
 
+            <div style={{ position: 'fixed', bottom: 20, right: 20 }}>
+                {show && (
+                    <div
+                        style={{
+                            backgroundColor: 'green',
+                            color: 'white',
+                            padding: '10px 20px',
+                            borderRadius: '5px',
+                        }}
+                    >
+                        Ссылка скопирована
+                    </div>
+                )}
+            </div>
+
         </div>
+
     )
 }
+

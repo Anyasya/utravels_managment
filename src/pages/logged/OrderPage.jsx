@@ -80,9 +80,11 @@ export const OrderPage = () => {
 
     const saveOrder = () => {
         location?.state ? updateOrderData(orderData).then(result => {
+                console.log(result)
                 navigate('/')
             }) :
             saveOrderData(orderData).then(result => {
+                console.log(result)
                 navigate('/')
             })
 

@@ -8,16 +8,12 @@ import {
     getOrderData,
     getOrderFields,
     getOrderGuestFields, getPaymentLink,
-    updateOrderData
 } from "../../api/routes/client";
 
 export const ConfirmPage = () => {
-    // const [orderId, setOrderId] = useState(ORDERDATA)
-
     const [fields, setFields] = useState([])
     const [guestFields, setGuestFields] = useState([])
     const location = useLocation()
-    const navigate = useNavigate()
     const [orderData, setOrderData] = useState({})
     useEffect(() => {
        let order = (((location.pathname).split('/').slice(-1))[0])
@@ -49,21 +45,16 @@ export const ConfirmPage = () => {
         getPaymentLink(orderData.id).then(result => {
             window.open(result.data, "_blank", "noreferrer")
             })
-        // updateOrderData(orderData).then(result => {
-        //     console.log('ok')
-        // })
-
-
     }
 
     return (
-        <div style={{width: '80%', margin: 'auto'}}>
+        <div style={{width: '80%', margin: 'auto', maxWidth: 900}}>
             <Header guest={true}/>
             <div className={'orderInfo'}>
                 <div className="orderInfo__topInfo">
                     <div className="orderInfo__left">
                         <div className="orderInfo__leftName">{orderData?.hotel}</div>
-                        <div className="orderInfo__leftCountry">{orderData?.hotel_country}</div>
+                        <div className="orderInfo__leftCountry">{`${orderData?.area_to}, ${orderData?.arrive_area}`}</div>
                     </div>
                     <div className="orderInfo__right">
                         <div className="orderInfo__rightName">К ОПЛАТЕ</div>
@@ -74,8 +65,11 @@ export const ConfirmPage = () => {
                     <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginBottom: 50}}>
                         {fields  &&
                             fields.map((item, key) => (
+                                item.key !== 'hotel' &&
+                                item.key !== 'arrive_area' &&
+                                item.key !== 'price' &&
                                 <div key={key} style={{width: '25%'}} className={'orderInfo__bottomField'}>
-                                    <div className={'orderInfo__bottomInfoTitle'}>{item.placeholder[0].toUpperCase() + item.placeholder.slice(1)}</div>
+                                    <div className={'orderInfo__bottomInfoTitle'}>{(item.placeholder[0].toUpperCase() + item.placeholder.slice(1)).split('(ГГГГ-ММ-ДД)')[0]}</div>
                                     <div className={'orderInfo__bottomInfoValue'}>{item.key ? orderData.hasOwnProperty(item.key) ?  item.key === 'guests' ? (orderData[item.key]).length :orderData[item.key] : `` : ''}</div>
 
                                 </div>
@@ -96,24 +90,51 @@ export const ConfirmPage = () => {
                             fontWeight: 600,
                             display: 'flex',
                             justifyContent: 'space-between',
-                            alignItems: 'center'
+                            alignItems: 'center',
+
                         }}>
                             <div>
-                                <div className={'orderTitleRusName'}>{item.en_first_name} {item.en_second_name} {item.en_middle_name}</div>
-                                <div className={'orderTitleEngName'}>{item.ru_first_name} {item.ru_second_name} {item.ru_middle_name}</div>
+                                <div className={'orderTitleRusName'}>{item.en_first_name.toUpperCase()} {item.en_second_name.toUpperCase()} {item.en_middle_name.toUpperCase()}</div>
+                                <div className={'orderTitleEngName'}>{item.ru_first_name.toUpperCase()} {item.ru_second_name.toUpperCase()} {item.ru_middle_name.toUpperCase()}</div>
                             </div>
                             <DefaultButton {...{
-                                text:  `${item?.confirmed ? 'Данные подтверждены':'Подтвердить'}`,
+                                text:  `${item?.confirmed ? 'Данные подтверждены':'Подтвердить данные'}`,
                                 onClick: () => {handleInputChange(key, 'confirmed', true, item.id); },
                                 height: 40,
-                                style: {background: item?.confirmed ? '#878395': '#FF5104' }
+                                style: {background: item?.confirmed ? '#878395': '#FF5104',position: 'relative',
+                                    top: '-14px' }
                             }}/>
                         </div>
-                        <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap'}}>
+                        <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginTop: -50}}>
+                            <div style={{width: '25%', marginBottom: 20}}>
+                                <div className={'confirmGuestTitle'}>Дата рождения</div>
+                                <div className={'confirmGuestValue'}>{item.birth_date}</div>
+                            </div>
+                            <div style={{width: '25%', marginBottom: 20}}>
+                                <div className={'confirmGuestTitle'}>Гражданство</div>
+                                <div className={'confirmGuestValue'}>{item.citizenship}</div>
+                            </div>
+                            <div style={{width: '25%', marginBottom: 20}}>
+                                <div className={'confirmGuestTitle'}>Тип документа</div>
+                                <div className={'confirmGuestValue'}>{item.document_type}</div>
+                            </div>
+                            <div style={{width: '25%', marginBottom: 20}}>
+                                <div className={'confirmGuestTitle'}></div>
+                                <div className={'confirmGuestValue'}></div>
+                            </div>
                             {guestFields &&
                                 guestFields.map((item, key2) => (
+                                    item.key !== 'document_type' &&
+                                    item.key !== 'birth_date' &&
+                                    item.key !== 'citizenship' &&
+                                    item.key !== 'en_first_name' &&
+                                    item.key !== 'en_middle_name' &&
+                                    item.key !== 'en_second_name' &&
+                                    item.key !== 'ru_first_name' &&
+                                    item.key !== 'ru_middle_name' &&
+                                    item.key !== 'ru_second_name' &&
                                     <div key={key2} style={{width: '25%', marginBottom: 20}}>
-                                        <div className={'confirmGuestTitle'}>{item.placeholder[0].toUpperCase() + item.placeholder.slice(1)}</div>
+                                        <div className={'confirmGuestTitle'}>{(item.placeholder[0].toUpperCase() + item.placeholder.slice(1)).split('(ГГГГ-ММ-ДД)')[0]}</div>
                                         <div className={'confirmGuestValue'}>{orderData.guests[key] ? orderData.guests[key][item.key] ? orderData.guests[key][item.key] : '' : ''}</div>
                                     </div>
 

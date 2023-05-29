@@ -16,6 +16,7 @@
     border-radius: 20px;
     margin-bottom: 50px;
     box-sizing: border-box;
+    padding-bottom: 0;
 }
 
 .orderInfo__topInfo {
@@ -33,6 +34,7 @@
     line-height: 18px;
     margin-bottom: 5px;
     color: #878395;
+    max-width: 115px;
 }
 
 .orderInfo__bottomInfoValue {
@@ -157,12 +159,12 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 18px;
-
     color: #000000;
 
 }
 
 
 .orderInfo__bottomField{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+
 }

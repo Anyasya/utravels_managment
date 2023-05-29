@@ -13,18 +13,20 @@ export const unlogged = (root) => ([
                 path: `${root}/sign-in`,
                 element: <SignIn />,
             },
-            {
-                path: `${root}/confirm`,
-                element: <ConfirmPage />,
-            },
-            {
-                path: `${root}/confirm/:id`,
-                element: <ConfirmPage/>,
-            },
+            // {
+            //     path: `${root}/confirm`,
+            //     element: <ConfirmPage />,
+            // },
+
             {
                 path: `${root}/*`,
                 element: <Navigate {...{to: `${root}/sign-in`}} />,
             }
         ]
-    }
+    },
+    {
+        path: `checkout/:id`,
+        element: <ConfirmPage/>,
+    },
+
 ])

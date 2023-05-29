@@ -9,6 +9,10 @@ import {ConfirmPage} from "../pages/logged/ConfirmPage";
 const Router = () => {
 
     const router = [
+        // {
+        //     path: "/details/*",
+        //     element: <ConfirmPage />,
+        // },
         {
             path: "/",
             element: <ProtectedLayout/>,
@@ -18,6 +22,7 @@ const Router = () => {
         //     path: "/*",
         //     element: <Page404/>
         // },
+
         {
             path: '*',
             element: <Navigate {...{to: '/'}}/>
