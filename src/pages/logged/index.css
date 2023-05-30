@@ -14,7 +14,7 @@
     width: 100%;
     background: #FFFFFF;
     border-radius: 20px;
-    margin-bottom: 50px;
+    margin-bottom: -45px;
     box-sizing: border-box;
     padding-bottom: 0;
 }
@@ -208,6 +208,15 @@
     }
     .orderInfo__bottomInfo{
         padding-bottom: 1px;
+    }
+    .orderInfo{
+        margin-bottom: 5px;
+    }
+    .orderInfo__bottomInfoItem{
+        margin-bottom: 0 !important;
+    }
+    .link-oferta{
+        margin-bottom: 150px !important;
     }
 
 }

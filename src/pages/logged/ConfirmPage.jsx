@@ -62,7 +62,7 @@ export const ConfirmPage = () => {
                     </div>
                 </div>
                 <div className="orderInfo__bottomInfo">
-                    <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginBottom: 50}}>
+                    <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginBottom: 50}} className={'orderInfo__bottomInfoItem'} >
                         {fields  &&
                             fields.map((item, key) => (
                                 item.key !== 'hotel' &&
@@ -81,18 +81,8 @@ export const ConfirmPage = () => {
 
             </div>
             <div className={'orderInfo2'}>
-                <div className="orderInfo__topInfo">
-                    <div className="orderInfo__left">
-                        <div className="orderInfo__leftName">{orderData?.hotel}</div>
-                        <div className="orderInfo__leftCountry">{`${orderData?.area_to}, ${orderData?.arrive_area}`}</div>
-                    </div>
-                    <div className="orderInfo__right">
-                        <div className="orderInfo__rightName">К ОПЛАТЕ</div>
-                        <div className="orderInfo__rightCountry">{orderData?.price && (orderData?.price).toLocaleString()} ₽</div>
-                    </div>
-                </div>
                 <div className="orderInfo__bottomInfo">
-                    <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginBottom: 50}}>
+                    <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginBottom: 50}} className={'orderInfo__bottomInfoItem'} >
                         {fields  &&
                             fields.map((item, key) => (
                                 item.key !== 'hotel' &&
@@ -187,7 +177,7 @@ export const ConfirmPage = () => {
                 }}/>
             </div>
 
-            <div style={{marginTop: 15, marginBottom:20, color: '#878395',display: 'flex', justifyContent: 'center'}}>
+            <div style={{marginTop: 15, marginBottom:20, color: '#878395',display: 'flex', justifyContent: 'center'}} className={'link-oferta'}>
                 Я принимаю условия <a href='https://utravels.ru/oferta.pdf' target='_blank' style={{color: '#FF5104', paddingLeft: 5}}> оферты</a>
             </div>
 
