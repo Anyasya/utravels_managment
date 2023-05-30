@@ -68,7 +68,7 @@ export const ConfirmPage = () => {
                                 item.key !== 'hotel' &&
                                 item.key !== 'arrive_area' &&
                                 item.key !== 'price' &&
-                                <div key={key} style={{width: '25%'}} className={'orderInfo__bottomField'}>
+                                <div key={key}  className={'orderInfo__bottomField'} className={'confirmGuestItem'}>
                                     <div className={'orderInfo__bottomInfoTitle'}>{(item.placeholder[0].toUpperCase() + item.placeholder.slice(1)).split('(ГГГГ-ММ-ДД)')[0]}</div>
                                     <div className={'orderInfo__bottomInfoValue'}>{item.key ? orderData.hasOwnProperty(item.key) ?  item.key === 'guests' ? (orderData[item.key]).length :orderData[item.key] : `` : ''}</div>
 
@@ -80,6 +80,37 @@ export const ConfirmPage = () => {
                 </div>
 
             </div>
+            <div className={'orderInfo2'}>
+                <div className="orderInfo__topInfo">
+                    <div className="orderInfo__left">
+                        <div className="orderInfo__leftName">{orderData?.hotel}</div>
+                        <div className="orderInfo__leftCountry">{`${orderData?.area_to}, ${orderData?.arrive_area}`}</div>
+                    </div>
+                    <div className="orderInfo__right">
+                        <div className="orderInfo__rightName">К ОПЛАТЕ</div>
+                        <div className="orderInfo__rightCountry">{orderData?.price && (orderData?.price).toLocaleString()} ₽</div>
+                    </div>
+                </div>
+                <div className="orderInfo__bottomInfo">
+                    <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginBottom: 50}}>
+                        {fields  &&
+                            fields.map((item, key) => (
+                                item.key !== 'hotel' &&
+                                item.key !== 'arrive_area' &&
+                                item.key !== 'price' &&
+                                <div key={key}  className={'orderInfo__bottomField'} className={'confirmGuestItem'}>
+                                    <div className={'orderInfo__bottomInfoTitle'}>{(item.placeholder[0].toUpperCase() + item.placeholder.slice(1)).split('(ГГГГ-ММ-ДД)')[0]}</div>
+                                    <div className={'orderInfo__bottomInfoValue'}>{item.key ? orderData.hasOwnProperty(item.key) ?  item.key === 'guests' ? (orderData[item.key]).length :orderData[item.key] : `` : ''}</div>
+
+                                </div>
+
+                            ))}
+                    </div>
+
+                </div>
+
+            </div>
+
             <div className={'orderTitle'}>Паспортные данные</div>
 
 
@@ -105,20 +136,20 @@ export const ConfirmPage = () => {
                                     top: '-14px' }
                             }}/>
                         </div>
-                        <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginTop: -50}}>
-                            <div style={{width: '25%', marginBottom: 20}}>
+                        <div style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', marginTop: -50}} className={'confirmGuestContent'}>
+                            <div style={{ marginBottom: 20}} className={'confirmGuestItem'}>
                                 <div className={'confirmGuestTitle'}>Дата рождения</div>
                                 <div className={'confirmGuestValue'}>{item.birth_date}</div>
                             </div>
-                            <div style={{width: '25%', marginBottom: 20}}>
+                            <div style={{ marginBottom: 20}} className={'confirmGuestItem'}>
                                 <div className={'confirmGuestTitle'}>Гражданство</div>
                                 <div className={'confirmGuestValue'}>{item.citizenship}</div>
                             </div>
-                            <div style={{width: '25%', marginBottom: 20}}>
+                            <div style={{ marginBottom: 20}} className={'confirmGuestItem'}>
                                 <div className={'confirmGuestTitle'}>Тип документа</div>
                                 <div className={'confirmGuestValue'}>{item.document_type}</div>
                             </div>
-                            <div style={{width: '25%', marginBottom: 20}}>
+                            <div style={{ marginBottom: 20}} className={'confirmGuestItem'}>
                                 <div className={'confirmGuestTitle'}></div>
                                 <div className={'confirmGuestValue'}></div>
                             </div>
@@ -133,7 +164,7 @@ export const ConfirmPage = () => {
                                     item.key !== 'ru_first_name' &&
                                     item.key !== 'ru_middle_name' &&
                                     item.key !== 'ru_second_name' &&
-                                    <div key={key2} style={{width: '25%', marginBottom: 20}}>
+                                    <div key={key2} style={{ marginBottom: 20}} className={'confirmGuestItem'}>
                                         <div className={'confirmGuestTitle'}>{(item.placeholder[0].toUpperCase() + item.placeholder.slice(1)).split('(ГГГГ-ММ-ДД)')[0]}</div>
                                         <div className={'confirmGuestValue'}>{orderData.guests[key] ? orderData.guests[key][item.key] ? orderData.guests[key][item.key] : '' : ''}</div>
                                     </div>
@@ -156,9 +187,8 @@ export const ConfirmPage = () => {
                 }}/>
             </div>
 
-            <div style={{marginTop: 15, marginBottom:20, color: '#878395',display: 'flex',
-                justifyContent: 'center'}}>
-                Я принимаю условия <a href='assets/docs/oferta.pdf' target='_blank' style={{color: '#FF5104', paddingLeft: 5}}> оферты</a>
+            <div style={{marginTop: 15, marginBottom:20, color: '#878395',display: 'flex', justifyContent: 'center'}}>
+                Я принимаю условия <a href='https://utravels.ru/oferta.pdf' target='_blank' style={{color: '#FF5104', paddingLeft: 5}}> оферты</a>
             </div>
 
 

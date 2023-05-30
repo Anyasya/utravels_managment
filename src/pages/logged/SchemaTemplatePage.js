@@ -82,7 +82,7 @@ const SchemaTemplatePage = (props) => {
                     // style: {marginTop: 50}
                 }}/>
             </div>
-            {cards &&
+            {cards && cards.length > 0 &&
                 cards.map((item, key) => (
                     <div key={key}>
                         <ClientCard {...{item, isOpen, setIsOpen, handleModalOpen, setCurrentCardId}} />

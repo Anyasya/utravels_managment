@@ -19,6 +19,17 @@
     padding-bottom: 0;
 }
 
+.orderInfo2 {
+    padding: 30px;
+    gap: 30px;
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    box-sizing: border-box;
+    padding-bottom: 0;
+}
+
 .orderInfo__topInfo {
     display: flex;
     justify-content: space-between;
@@ -166,5 +177,37 @@
 
 .orderInfo__bottomField{
     margin-bottom: 20px;
+
+}
+
+.confirmGuestItem {
+    width: 25%;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+    .confirmGuestItem {
+        width: 50%;
+    }
+    .orderTitle{
+        flex-direction: column;
+        align-items: start !important;
+    }
+    .orderTitle .DefaultButton {
+        top: 0 !important;
+    }
+    .confirmGuestContent{
+        margin-top: -30px !important;
+    }
+    .orderInfo__topInfo {
+        flex-direction: column;
+    }
+    .orderInfo__right{
+        align-items: flex-start;
+        margin-bottom: 28px;
+    }
+    .orderInfo__bottomInfo{
+        padding-bottom: 1px;
+    }
 
 }
